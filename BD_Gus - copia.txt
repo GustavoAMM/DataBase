@@ -1,0 +1,29 @@
+create table User(Id_user int(15) not null auto_increment primary key,User_name varchar(35) not null, User_lastname varchar(35) not null,Password varchar(35) not null, Email varchar(50) not null, Gender char(1) not null);
+
+create table Car(Id_car int(15) not null auto_increment primary key, Registration_plate varchar(10) not null, Color varchar(20) not null, Deficiency TEXT, Mileage int(10) not null, User_id int(15) not null);
+
+create table Brand(Id_brand int(15) not null auto_increment primary key, Brand_name varchar(25) not null, Founders varchar(100) not null, Foundation_date DATE not null, Country varchar(20) not null, Brand_history TEXT not null,Car_id int(15) not null);
+
+
+create table Model(Id_model int(15) not null auto_increment primary key, Model_name varchar(15) not null, Model_type varchar(15) not null, Doors int(2), Seats int(2), GasTank_capacity int(5), Gas_type varchar(30), Model_year int(4), Starting_price float, Actual_price float, Configuration TEXT not null, Brand_id int(15) not null);
+
+create table Section(Id_section int(15) not null auto_increment primary key, Creation_date DATE not null, Section_type varchar(20) not null,Model_id int(15) not null);
+
+create table News(Id_news int(15) not null auto_increment primary key, News_date DATE not null, News_score float not null, News_text TEXT not null, Section_id int(15) not null);
+
+create table Post(Id_post int(15) not null auto_increment primary key, Post_date DATE not null, Post_score float not null, Post_text TEXT not null, Section_id int(15) not null);
+
+
+
+
+ALTER TABLE Car ADD CONSTRAINT FOREIGN KEY (User_id) REFERENCES User(Id_User) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE Brand ADD CONSTRAINT FOREIGN KEY (Car_id) REFERENCES Car(Id_car) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE Model ADD CONSTRAINT FOREIGN KEY (Brand_id) REFERENCES Brand(Id_brand) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE Section ADD CONSTRAINT FOREIGN KEY (Model_id) REFERENCES Model(Id_model) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE News ADD CONSTRAINT FOREIGN KEY (Section_id) REFERENCES Section(Id_section) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE Post ADD CONSTRAINT FOREIGN KEY (Section_id) REFERENCES Section(Id_section) ON DELETE CASCADE ON UPDATE CASCADE;
